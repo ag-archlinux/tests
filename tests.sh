@@ -2,7 +2,23 @@
 set -e
 #-------------------------------------------------------------------#
 echo "#####..................................................#####"
-
+pacman --noconfirm --needed -Syyu
+pacman --noconfirm --needed -S git
+#####  MY FUNCTIONS                 #####
+git clone https://github.com/ag-archlinux/ag-archlinux
+source /root/ag-archlinux/functions.sh
+#####  INPUTS                       #####
+read -p "Enter your username: " PERSONAL_ACCOUNT
+#####  BASH COMPLETION              #####	
+pacman  --noconfirm --needed  -S bash-completion
+#####  PERSONAL ACCOUNT             #####
+useradd -m -g users -G audio,video,network,wheel,storage -s /bin/bash $PERSONAL_ACCOUNT
+#####  PASSWORD OF PERSONAL ACCOUNT #####
+passwd $PERSONAL_ACCOUNT
+#####  ACCOUNT SUDO PERMITIONS      #####
+accountperms "%wheel ALL=(ALL) NOPASSWD: ALL"
+#####  UPDATE PACKAGES              #####
+sudo pacman --noconfirm --needed -Syu
 #------------------------------MIRRORS------------------------------#
 echo "#####..........Installing reflector....................#####"
 sudo pacman -S --noconfirm --needed reflector
